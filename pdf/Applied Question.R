@@ -8,12 +8,12 @@ eps = rnorm(100)
 #b. Generate a response vector Y of length n = 100 according to the model \(Y = B0 +B1X +B2X^2 +B3X^3 +eps), 
 #where B0, B1, B2, and B3 are constants of your choice.
 
-b0 = 2
-b1 = 3
-b2 = 4
-b3 = 5
+B0 = 2
+B1 = 3
+B2 = 4
+B3 = 5
 
-Y = b0 + b1*X + b2*X^2 + b3*X^3 + eps
+Y = B0 + B1*X + B2*X^2 + B3*X^3 + eps
 
 #c. Use the regsubsets() function to perform best subset selection in order to choose the best model containing the 
 #predictors X, X^2...X^10. What is the best model obtained according to Cp, BIC, and adjusted R^2? 
@@ -24,7 +24,8 @@ library(ISLR)
 library(leaps)
 
 df <- data.frame(Y = Y, X = X)
-regfit.full <- regsubsets(Y ~ poly(X, 10, raw = T), data = df, nvmax = 10)
+#regfit.full <- regsubsets(Y ~ poly(X, 10, raw = T), data = df, nvmax = 10)
+regfit.full <- regsubsets(Y ~ X + I(X^2) + I(X^3) + I(X^4) + I(X^5) + I(X^6) + I(X^7) + I(X^8) + I(X^9) + I(X^10), data = df, nvmax = 10)
 (reg.summary <- summary(regfit.full))
 
 
@@ -51,10 +52,8 @@ coef(regfit.full, which.max(reg.summary$adjr2))
 #How does your answer compare to the results in c?
 
 #Forward
-regfit.fwd <- regsubsets(Y~poly(X, 10, raw = T), data = df, nvmax = 10, method = 'forward')
+regfit.fwd <- regsubsets(Y ~ X + I(X^2) + I(X^3) + I(X^4) + I(X^5) + I(X^6) + I(X^7) + I(X^8) + I(X^9) + I(X^10), data = df, nvmax = 10, method = 'forward')
 (fwd.summary <- summary(regfit.fwd))
-
-par(mfrow = c(2, 2))
 
 plot(fwd.summary$rss, xlab = 'Number of Variables', ylab = 'RSS', type = 'l')
 
@@ -73,10 +72,9 @@ coef(regfit.fwd, which.max(fwd.summary$adjr2))
 
 #Backwards
 
-regfit.bwd <- regsubsets(Y~poly(X, 10, raw = T), data = df, nvmax = 10, method = 'backward')
+regfit.bwd <- regsubsets(Y ~ X + I(X^2) + I(X^3) + I(X^4) + I(X^5) + I(X^6) + I(X^7) + I(X^8) + I(X^9) + I(X^10), data = df, nvmax = 10, method = 'backward')
 (bwd.summary <- summary(regfit.bwd))
 
-par(mfrow = c(2, 2))
 
 plot(bwd.summary$rss, xlab = 'Number of Variables', ylab = 'RSS', type = 'l')
 
@@ -93,3 +91,4 @@ coef(regfit.bwd, which.min(bwd.summary$cp))
 coef(regfit.bwd, which.min(bwd.summary$bic))
 coef(regfit.bwd, which.max(bwd.summary$adjr2))
 
+par(mfrow = c(1, 1))

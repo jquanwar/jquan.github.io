@@ -108,7 +108,7 @@ regfit.best <- regsubsets(Salary ~ ., data = HittersData[train,], nvmax = 19)
 
 test.mat <- model.matrix(Salary ~ ., data = HittersData[test,])
 #We now compute the validation set error for the best model of each model size. 
-#We ???rst make a model matrix from the test data. 
+#We first make a model matrix from the test data. 
 
 val.errors <- rep(0,19)
 for(i in 1:19){
@@ -121,40 +121,57 @@ for(i in 1:19){
 #to form the predictions, and compute the test MSE.
 
 
-val.error.min <- which.min(val.errors)
-#Here we find which model works better that contains the lowest validation errors
-val.error.min
+(val.error.min <- which.min(val.errors))
+#Here we find which model that works better that contains the lowest validation errors
+
 
 coef(regfit.best,val.error.min)
-#shows the number of variables for the best model
+#shows the variables for the best model
+
+predict.regsubsets <- function (object , newdata ,id ,...){
+  form=as.formula (object$call [[2]])
+  mat=model.matrix(form ,newdata )
+  coefi=coef(object ,id=id)
+  xvars=names(coefi)
+  mat[,xvars]%*%coefi
+}
+# because there is no predict() method for regsubsets(), we can capture
+# our steps above and write our own predict method.
 
 
 regfit.best <- regsubsets(Salary ~ .,data=HittersData ,nvmax=19)
-coef(regfit.best ,10)
-#We are now performing the best subset selection on the full data set, and select the best ten-variable model (arbitrarily) 
+coef(regfit.best ,val.error.min)
+#We are now performing the best subset selection on the full data set, and select the best seven-variable model  
 
 
 #We now try to choose among the models of different sizes using cross-validation.
 #This approach is somewhat involved, as we must perform best
 #subset selection within each of the k training sets.
+
 k=10
 #A k-10 fold validation is a common choice
 set.seed(1)
-folds=sample(1:k,nrow(HittersData),replace=TRUE)
-cv.errors =matrix(0,k,19, dimnames =list(NULL,paste (1:19)))
+folds <- sample(1:k,nrow(HittersData),replace=TRUE)
+cv.errors <- matrix(0,k,19, dimnames =list(NULL,paste (1:19)))
 
 for(j in 1:k){
   best.fit <- regsubsets(Salary ~ .,data=HittersData[folds!=j,],
                          nvmax=19)
   for(i in 1:19){
-    pred <- predict(best.fit ,HittersData[folds ==j,],id=i)
+    pred <- predict(best.fit,HittersData[folds == j,],id=i)
     cv.errors[j,i] <- mean((HittersData$Salary[folds==j]-pred)^2)
     }
 }
 
+#  In the jth fold, the elements of folds that equal j are in the test set, 
+#and the remainder are in the training set. We make our predictions for each model size 
+# (using our the predict() method), compute the test errors on the appropriate subset,
+#and store them in the appropriate slot in the matrix cv.errors.
 
-mean.cv.errors <- apply(cv.errors ,2, mean)
-mean.cv.errors
+(mean.cv.errors <- apply(cv.errors ,2, mean))
+
+#We use the apply() function to average over the columns of this apply() matrix in order to 
+#obtain a vector for which the jth element is the crossvalidation error for the j-variable model.
 
 par(mfrow=c(1,1))
 plot(mean.cv.errors ,type="b")
@@ -162,3 +179,5 @@ plot(mean.cv.errors ,type="b")
 reg.best <- regsubsets(Salary~.,data=Hitters , nvmax=19)
 
 coef(reg.best ,which.min(mean.cv.errors))
+
+#After the cross validation method. we can see that the best model is the one with 11 variables shown
