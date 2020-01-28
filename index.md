@@ -10,7 +10,7 @@
 [Applied Exercise #8](/pdf/Applied Question.R)
 
 ---
-
+<img src="images/subsetpic.jpg?raw=true"/>
 
 
 
