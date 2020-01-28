@@ -7,7 +7,7 @@
 [6.5 Lab 1](/pdf/Lab1, Subset Selection Methods.R)
 
 ---
-[Applied Exercise #8](/pdf/sample_presentation.pdf)
+[Applied Exercise #8](/pdf/Applied Question.R)
 
 ---
 
