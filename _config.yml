@@ -2,9 +2,7 @@ title: Jose Quan
 logo: "/images/IMG_7095.JPG?raw=true" 
 description: > # your text below (remove <br> elements if you don't need line breaks)
 
-  <br><br>
-  <br><br>
-  <a href="https://www.linkedin.com/in/josecquan/">View My LinkedIn Profile</a> 
+<a href="https://www.linkedin.com/in/josecquan/">View My LinkedIn Profile</a> 
   
 theme: jekyll-theme-minimal
 
