@@ -2,14 +2,12 @@
 
 ---
 
-### Category Name 1 
+### TP1 In-Class Demo (Team 14), Machine Learning II 
 
-[Project 1 Title](/sample_page)
-<img src="images/dummy_thumbnail.jpg?raw=true"/>
+[6.5 Lab 1](/sample_page)
 
 ---
-[Project 2 Title](/pdf/sample_presentation.pdf)
-<img src="images/dummy_thumbnail.jpg?raw=true"/>
+[Applied Exercise #8](/pdf/sample_presentation.pdf)
 
 ---
 [Project 3 Title](http://example.com/)
