@@ -12,8 +12,9 @@ rm(list=ls())
 
 library(ISLR)
 
-?Hitters
+
 names(Hitters)
+?Hitters
 dim(Hitters)
 
 sum(is.na(Hitters$Salary))
@@ -64,14 +65,15 @@ bicmin <- which.min(reg.summary$bic )
 points(bicmin,reg.summary$bic [bicmin],col="red",cex=2,pch =20)
 
 ?plot.regsubsets
+
+par(mfrow=c(1,1))
+
 plot(regfit.full ,scale="r2")
 plot(regfit.full ,scale="adjr2")
 plot(regfit.full ,scale="Cp")
 plot(regfit.full ,scale="bic")
 
 coef(regfit.full, bicmin)
-
-par(mfrow=c(1,1))
 
 #### 6.5.2 Forward and Backward Stepwise Selection ####
 
@@ -180,4 +182,4 @@ reg.best <- regsubsets(Salary~.,data=Hitters , nvmax=19)
 
 coef(reg.best ,which.min(mean.cv.errors))
 
-#After the cross validation method. we can see that the best model is the one with 11 variables shown
+#After the cross validation method. we can see that the best model is the one with 10 variables shown
