@@ -15,4 +15,4 @@
 
 ### TP2 Store Item Demand Forecasting Challenge
 
-
+[Forecasting Presentation File](/pdf/ML2-Final-Project-Report.html)
