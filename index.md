@@ -16,6 +16,6 @@
 
 ### TP2 Store Item Demand Forecasting Challenge
 
-[Forecasting Presentation File](/pdf/ML2-Final-Project-Report.html)
+[Forecasting Presentation File](/pdf/Machine Learning II_ Final Project.html)
 
 <img src = "images/measuring-forecast-accuracy-banner-2272px.png?raw=true"/>
